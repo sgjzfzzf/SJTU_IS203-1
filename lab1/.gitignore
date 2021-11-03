@@ -1,0 +1,6 @@
+*
+!.gitignore
+!do.sh
+!*.l
+!*.c
+lex.yy.c
