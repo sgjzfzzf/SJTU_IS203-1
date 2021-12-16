@@ -1,0 +1,4 @@
+*.o
+parser
+test/
+test-answer/

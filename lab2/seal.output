@@ -1,0 +1,2572 @@
+Terminals unused in grammar
+
+    VAR
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: declList
+
+    2 declList: decl
+    3         | declList decl
+
+    4 decl: variableDecl
+    5     | callDecl
+
+    6 variableDecl: variable ';'
+
+    7 variableDeclList: %empty
+    8                 | variableDeclList variableDecl
+
+    9 variable: TYPEID OBJECTID
+
+   10 variables: variable
+   11          | variableList ',' variable
+
+   12 variableList: %empty
+   13             | variables
+
+   14 callDecl: TYPEID FUNC OBJECTID '(' variableList ')' stmtBlock
+
+   15 stmtBlock: '{' variableDeclList stmtList '}'
+
+   16 stmt: ';'
+   17     | expr ';'
+   18     | ifStmt
+   19     | whileStmt
+   20     | forStmt
+   21     | breakStmt
+   22     | continueStmt
+   23     | returnStmt
+   24     | stmtBlock
+
+   25 stmtList: %empty
+   26         | stmtList stmt
+
+   27 ifStmt: IF expr stmtBlock ELSE stmtBlock
+   28       | IF expr stmtBlock
+
+   29 whileStmt: WHILE expr stmtBlock
+
+   30 forStmt: FOR expr ';' expr ';' expr stmtBlock
+   31        | FOR ';' expr ';' expr stmtBlock
+   32        | FOR expr ';' ';' expr stmtBlock
+   33        | FOR expr ';' expr ';' stmtBlock
+   34        | FOR ';' ';' expr stmtBlock
+   35        | FOR ';' expr ';' stmtBlock
+   36        | FOR expr ';' ';' stmtBlock
+   37        | FOR ';' ';' stmtBlock
+
+   38 returnStmt: RETURN expr ';'
+   39           | RETURN ';'
+
+   40 continueStmt: CONTINUE ';'
+
+   41 breakStmt: BREAK ';'
+
+   42 expr: OBJECTID '=' expr
+   43     | CONST_INT
+   44     | CONST_STRING
+   45     | CONST_BOOL
+   46     | CONST_FLOAT
+   47     | OBJECTID
+   48     | expr '+' expr
+   49     | expr '-' expr
+   50     | expr '*' expr
+   51     | expr '/' expr
+   52     | expr '%' expr
+   53     | '-' expr
+   54     | expr '<' expr
+   55     | expr LE expr
+   56     | expr EQUAL expr
+   57     | expr NE expr
+   58     | expr GE expr
+   59     | expr '>' expr
+   60     | expr AND expr
+   61     | expr OR expr
+   62     | '!' expr
+   63     | '~' expr
+   64     | expr '&' expr
+   65     | expr '|' expr
+   66     | expr '^' expr
+   67     | call
+   68     | '(' expr ')'
+
+   69 call: OBJECTID '(' actualList ')'
+
+   70 actual: expr
+
+   71 actuals: actual
+   72        | actuals ',' actual
+
+   73 actualList: %empty
+   74           | actuals
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '!' (33) 62
+    '%' (37) 52
+    '&' (38) 64
+    '(' (40) 14 68 69
+    ')' (41) 14 68 69
+    '*' (42) 50
+    '+' (43) 48
+    ',' (44) 11 72
+    '-' (45) 49 53
+    '/' (47) 51
+    ';' (59) 6 16 17 30 31 32 33 34 35 36 37 38 39 40 41
+    '<' (60) 54
+    '=' (61) 42
+    '>' (62) 59
+    '^' (94) 66
+    '{' (123) 15
+    '|' (124) 65
+    '}' (125) 15
+    '~' (126) 63
+    error (256)
+    IF (258) 27 28
+    ELSE (260) 27
+    WHILE (261) 29
+    FOR (262) 30 31 32 33 34 35 36 37
+    BREAK (263) 41
+    CONTINUE (264) 40
+    FUNC (265) 14
+    RETURN (266) 38 39
+    CONST_BOOL <boolean> (267) 45
+    CONST_INT <symbol> (268) 43
+    CONST_STRING <symbol> (269) 44
+    CONST_FLOAT <symbol> (270) 46
+    VAR (271)
+    AND (274) 60
+    OR (275) 61
+    EQUAL (276) 56
+    NE (277) 57
+    GE (278) 58
+    LE (279) 55
+    OBJECTID <symbol> (284) 9 14 42 47 69
+    TYPEID <symbol> (285) 9 14
+    UMINUS (287)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (44)
+        on left: 0
+    program <program> (45)
+        on left: 1
+        on right: 0
+    declList <decls> (46)
+        on left: 2 3
+        on right: 1 3
+    decl <decl> (47)
+        on left: 4 5
+        on right: 2 3
+    variableDecl <variableDecl> (48)
+        on left: 6
+        on right: 4 8
+    variableDeclList <variableDecls> (49)
+        on left: 7 8
+        on right: 8 15
+    variable <variable> (50)
+        on left: 9
+        on right: 6 10 11
+    variables <variables> (51)
+        on left: 10 11
+        on right: 13
+    variableList <variables> (52)
+        on left: 12 13
+        on right: 11 14
+    callDecl <callDecl> (53)
+        on left: 14
+        on right: 5
+    stmtBlock <stmtBlock> (54)
+        on left: 15
+        on right: 14 24 27 28 29 30 31 32 33 34 35 36 37
+    stmt <stmt> (55)
+        on left: 16 17 18 19 20 21 22 23 24
+        on right: 26
+    stmtList <stmts> (56)
+        on left: 25 26
+        on right: 15 26
+    ifStmt <ifStmt> (57)
+        on left: 27 28
+        on right: 18
+    whileStmt <whileStmt> (58)
+        on left: 29
+        on right: 19
+    forStmt <forStmt> (59)
+        on left: 30 31 32 33 34 35 36 37
+        on right: 20
+    returnStmt <returnStmt> (60)
+        on left: 38 39
+        on right: 23
+    continueStmt <continueStmt> (61)
+        on left: 40
+        on right: 22
+    breakStmt <breakStmt> (62)
+        on left: 41
+        on right: 21
+    expr <expr> (63)
+        on left: 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68
+        on right: 17 27 28 29 30 31 32 33 34 35 36 38 42 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 68 70
+    call <call> (64)
+        on left: 69
+        on right: 67
+    actual <actual> (65)
+        on left: 70
+        on right: 71 72
+    actuals <actuals> (66)
+        on left: 71 72
+        on right: 72 74
+    actualList <actuals> (67)
+        on left: 73 74
+        on right: 69
+
+
+State 0
+
+    0 $accept: . program $end
+
+    TYPEID  shift, and go to state 1
+
+    program       go to state 2
+    declList      go to state 3
+    decl          go to state 4
+    variableDecl  go to state 5
+    variable      go to state 6
+    callDecl      go to state 7
+
+
+State 1
+
+    9 variable: TYPEID . OBJECTID
+   14 callDecl: TYPEID . FUNC OBJECTID '(' variableList ')' stmtBlock
+
+    FUNC      shift, and go to state 8
+    OBJECTID  shift, and go to state 9
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 10
+
+
+State 3
+
+    1 program: declList .
+    3 declList: declList . decl
+
+    TYPEID  shift, and go to state 1
+
+    $default  reduce using rule 1 (program)
+
+    decl          go to state 11
+    variableDecl  go to state 5
+    variable      go to state 6
+    callDecl      go to state 7
+
+
+State 4
+
+    2 declList: decl .
+
+    $default  reduce using rule 2 (declList)
+
+
+State 5
+
+    4 decl: variableDecl .
+
+    $default  reduce using rule 4 (decl)
+
+
+State 6
+
+    6 variableDecl: variable . ';'
+
+    ';'  shift, and go to state 12
+
+
+State 7
+
+    5 decl: callDecl .
+
+    $default  reduce using rule 5 (decl)
+
+
+State 8
+
+   14 callDecl: TYPEID FUNC . OBJECTID '(' variableList ')' stmtBlock
+
+    OBJECTID  shift, and go to state 13
+
+
+State 9
+
+    9 variable: TYPEID OBJECTID .
+
+    $default  reduce using rule 9 (variable)
+
+
+State 10
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 11
+
+    3 declList: declList decl .
+
+    $default  reduce using rule 3 (declList)
+
+
+State 12
+
+    6 variableDecl: variable ';' .
+
+    $default  reduce using rule 6 (variableDecl)
+
+
+State 13
+
+   14 callDecl: TYPEID FUNC OBJECTID . '(' variableList ')' stmtBlock
+
+    '('  shift, and go to state 14
+
+
+State 14
+
+   14 callDecl: TYPEID FUNC OBJECTID '(' . variableList ')' stmtBlock
+
+    TYPEID  shift, and go to state 15
+
+    $default  reduce using rule 12 (variableList)
+
+    variable      go to state 16
+    variables     go to state 17
+    variableList  go to state 18
+
+
+State 15
+
+    9 variable: TYPEID . OBJECTID
+
+    OBJECTID  shift, and go to state 9
+
+
+State 16
+
+   10 variables: variable .
+
+    $default  reduce using rule 10 (variables)
+
+
+State 17
+
+   13 variableList: variables .
+
+    $default  reduce using rule 13 (variableList)
+
+
+State 18
+
+   11 variables: variableList . ',' variable
+   14 callDecl: TYPEID FUNC OBJECTID '(' variableList . ')' stmtBlock
+
+    ','  shift, and go to state 19
+    ')'  shift, and go to state 20
+
+
+State 19
+
+   11 variables: variableList ',' . variable
+
+    TYPEID  shift, and go to state 15
+
+    variable  go to state 21
+
+
+State 20
+
+   14 callDecl: TYPEID FUNC OBJECTID '(' variableList ')' . stmtBlock
+
+    '{'  shift, and go to state 22
+
+    stmtBlock  go to state 23
+
+
+State 21
+
+   11 variables: variableList ',' variable .
+
+    $default  reduce using rule 11 (variables)
+
+
+State 22
+
+   15 stmtBlock: '{' . variableDeclList stmtList '}'
+
+    $default  reduce using rule 7 (variableDeclList)
+
+    variableDeclList  go to state 24
+
+
+State 23
+
+   14 callDecl: TYPEID FUNC OBJECTID '(' variableList ')' stmtBlock .
+
+    $default  reduce using rule 14 (callDecl)
+
+
+State 24
+
+    8 variableDeclList: variableDeclList . variableDecl
+   15 stmtBlock: '{' variableDeclList . stmtList '}'
+
+    TYPEID  shift, and go to state 15
+
+    $default  reduce using rule 25 (stmtList)
+
+    variableDecl  go to state 25
+    variable      go to state 6
+    stmtList      go to state 26
+
+
+State 25
+
+    8 variableDeclList: variableDeclList variableDecl .
+
+    $default  reduce using rule 8 (variableDeclList)
+
+
+State 26
+
+   15 stmtBlock: '{' variableDeclList stmtList . '}'
+   26 stmtList: stmtList . stmt
+
+    IF            shift, and go to state 27
+    WHILE         shift, and go to state 28
+    FOR           shift, and go to state 29
+    BREAK         shift, and go to state 30
+    CONTINUE      shift, and go to state 31
+    RETURN        shift, and go to state 32
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    ';'           shift, and go to state 41
+    '('           shift, and go to state 42
+    '{'           shift, and go to state 22
+    '}'           shift, and go to state 43
+
+    stmtBlock     go to state 44
+    stmt          go to state 45
+    ifStmt        go to state 46
+    whileStmt     go to state 47
+    forStmt       go to state 48
+    returnStmt    go to state 49
+    continueStmt  go to state 50
+    breakStmt     go to state 51
+    expr          go to state 52
+    call          go to state 53
+
+
+State 27
+
+   27 ifStmt: IF . expr stmtBlock ELSE stmtBlock
+   28       | IF . expr stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 54
+    call  go to state 53
+
+
+State 28
+
+   29 whileStmt: WHILE . expr stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 55
+    call  go to state 53
+
+
+State 29
+
+   30 forStmt: FOR . expr ';' expr ';' expr stmtBlock
+   31        | FOR . ';' expr ';' expr stmtBlock
+   32        | FOR . expr ';' ';' expr stmtBlock
+   33        | FOR . expr ';' expr ';' stmtBlock
+   34        | FOR . ';' ';' expr stmtBlock
+   35        | FOR . ';' expr ';' stmtBlock
+   36        | FOR . expr ';' ';' stmtBlock
+   37        | FOR . ';' ';' stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    ';'           shift, and go to state 56
+    '('           shift, and go to state 42
+
+    expr  go to state 57
+    call  go to state 53
+
+
+State 30
+
+   41 breakStmt: BREAK . ';'
+
+    ';'  shift, and go to state 58
+
+
+State 31
+
+   40 continueStmt: CONTINUE . ';'
+
+    ';'  shift, and go to state 59
+
+
+State 32
+
+   38 returnStmt: RETURN . expr ';'
+   39           | RETURN . ';'
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    ';'           shift, and go to state 60
+    '('           shift, and go to state 42
+
+    expr  go to state 61
+    call  go to state 53
+
+
+State 33
+
+   45 expr: CONST_BOOL .
+
+    $default  reduce using rule 45 (expr)
+
+
+State 34
+
+   43 expr: CONST_INT .
+
+    $default  reduce using rule 43 (expr)
+
+
+State 35
+
+   44 expr: CONST_STRING .
+
+    $default  reduce using rule 44 (expr)
+
+
+State 36
+
+   46 expr: CONST_FLOAT .
+
+    $default  reduce using rule 46 (expr)
+
+
+State 37
+
+   42 expr: OBJECTID . '=' expr
+   47     | OBJECTID .
+   69 call: OBJECTID . '(' actualList ')'
+
+    '='  shift, and go to state 62
+    '('  shift, and go to state 63
+
+    $default  reduce using rule 47 (expr)
+
+
+State 38
+
+   53 expr: '-' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 64
+    call  go to state 53
+
+
+State 39
+
+   62 expr: '!' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 65
+    call  go to state 53
+
+
+State 40
+
+   63 expr: '~' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 66
+    call  go to state 53
+
+
+State 41
+
+   16 stmt: ';' .
+
+    $default  reduce using rule 16 (stmt)
+
+
+State 42
+
+   68 expr: '(' . expr ')'
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 67
+    call  go to state 53
+
+
+State 43
+
+   15 stmtBlock: '{' variableDeclList stmtList '}' .
+
+    $default  reduce using rule 15 (stmtBlock)
+
+
+State 44
+
+   24 stmt: stmtBlock .
+
+    $default  reduce using rule 24 (stmt)
+
+
+State 45
+
+   26 stmtList: stmtList stmt .
+
+    $default  reduce using rule 26 (stmtList)
+
+
+State 46
+
+   18 stmt: ifStmt .
+
+    $default  reduce using rule 18 (stmt)
+
+
+State 47
+
+   19 stmt: whileStmt .
+
+    $default  reduce using rule 19 (stmt)
+
+
+State 48
+
+   20 stmt: forStmt .
+
+    $default  reduce using rule 20 (stmt)
+
+
+State 49
+
+   23 stmt: returnStmt .
+
+    $default  reduce using rule 23 (stmt)
+
+
+State 50
+
+   22 stmt: continueStmt .
+
+    $default  reduce using rule 22 (stmt)
+
+
+State 51
+
+   21 stmt: breakStmt .
+
+    $default  reduce using rule 21 (stmt)
+
+
+State 52
+
+   17 stmt: expr . ';'
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ';'    shift, and go to state 84
+
+
+State 53
+
+   67 expr: call .
+
+    $default  reduce using rule 67 (expr)
+
+
+State 54
+
+   27 ifStmt: IF expr . stmtBlock ELSE stmtBlock
+   28       | IF expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 85
+
+
+State 55
+
+   29 whileStmt: WHILE expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 86
+
+
+State 56
+
+   31 forStmt: FOR ';' . expr ';' expr stmtBlock
+   34        | FOR ';' . ';' expr stmtBlock
+   35        | FOR ';' . expr ';' stmtBlock
+   37        | FOR ';' . ';' stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    ';'           shift, and go to state 87
+    '('           shift, and go to state 42
+
+    expr  go to state 88
+    call  go to state 53
+
+
+State 57
+
+   30 forStmt: FOR expr . ';' expr ';' expr stmtBlock
+   32        | FOR expr . ';' ';' expr stmtBlock
+   33        | FOR expr . ';' expr ';' stmtBlock
+   36        | FOR expr . ';' ';' stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ';'    shift, and go to state 89
+
+
+State 58
+
+   41 breakStmt: BREAK ';' .
+
+    $default  reduce using rule 41 (breakStmt)
+
+
+State 59
+
+   40 continueStmt: CONTINUE ';' .
+
+    $default  reduce using rule 40 (continueStmt)
+
+
+State 60
+
+   39 returnStmt: RETURN ';' .
+
+    $default  reduce using rule 39 (returnStmt)
+
+
+State 61
+
+   38 returnStmt: RETURN expr . ';'
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ';'    shift, and go to state 90
+
+
+State 62
+
+   42 expr: OBJECTID '=' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 91
+    call  go to state 53
+
+
+State 63
+
+   69 call: OBJECTID '(' . actualList ')'
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    $default  reduce using rule 73 (actualList)
+
+    expr        go to state 92
+    call        go to state 53
+    actual      go to state 93
+    actuals     go to state 94
+    actualList  go to state 95
+
+
+State 64
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   53     | '-' expr .
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 53 (expr)
+
+
+State 65
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   62     | '!' expr .
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 62 (expr)
+
+
+State 66
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   63     | '~' expr .
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    $default  reduce using rule 63 (expr)
+
+
+State 67
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+   68     | '(' expr . ')'
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ')'    shift, and go to state 96
+
+
+State 68
+
+   60 expr: expr AND . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 97
+    call  go to state 53
+
+
+State 69
+
+   61 expr: expr OR . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 98
+    call  go to state 53
+
+
+State 70
+
+   56 expr: expr EQUAL . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 99
+    call  go to state 53
+
+
+State 71
+
+   57 expr: expr NE . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 100
+    call  go to state 53
+
+
+State 72
+
+   58 expr: expr GE . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 101
+    call  go to state 53
+
+
+State 73
+
+   55 expr: expr LE . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 102
+    call  go to state 53
+
+
+State 74
+
+   54 expr: expr '<' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 103
+    call  go to state 53
+
+
+State 75
+
+   59 expr: expr '>' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 104
+    call  go to state 53
+
+
+State 76
+
+   48 expr: expr '+' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 105
+    call  go to state 53
+
+
+State 77
+
+   49 expr: expr '-' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 106
+    call  go to state 53
+
+
+State 78
+
+   50 expr: expr '*' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 107
+    call  go to state 53
+
+
+State 79
+
+   51 expr: expr '/' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 108
+    call  go to state 53
+
+
+State 80
+
+   52 expr: expr '%' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 109
+    call  go to state 53
+
+
+State 81
+
+   64 expr: expr '&' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 110
+    call  go to state 53
+
+
+State 82
+
+   65 expr: expr '|' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 111
+    call  go to state 53
+
+
+State 83
+
+   66 expr: expr '^' . expr
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr  go to state 112
+    call  go to state 53
+
+
+State 84
+
+   17 stmt: expr ';' .
+
+    $default  reduce using rule 17 (stmt)
+
+
+State 85
+
+   27 ifStmt: IF expr stmtBlock . ELSE stmtBlock
+   28       | IF expr stmtBlock .
+
+    ELSE  shift, and go to state 113
+
+    $default  reduce using rule 28 (ifStmt)
+
+
+State 86
+
+   29 whileStmt: WHILE expr stmtBlock .
+
+    $default  reduce using rule 29 (whileStmt)
+
+
+State 87
+
+   34 forStmt: FOR ';' ';' . expr stmtBlock
+   37        | FOR ';' ';' . stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+    '{'           shift, and go to state 22
+
+    stmtBlock  go to state 114
+    expr       go to state 115
+    call       go to state 53
+
+
+State 88
+
+   31 forStmt: FOR ';' expr . ';' expr stmtBlock
+   35        | FOR ';' expr . ';' stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ';'    shift, and go to state 116
+
+
+State 89
+
+   30 forStmt: FOR expr ';' . expr ';' expr stmtBlock
+   32        | FOR expr ';' . ';' expr stmtBlock
+   33        | FOR expr ';' . expr ';' stmtBlock
+   36        | FOR expr ';' . ';' stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    ';'           shift, and go to state 117
+    '('           shift, and go to state 42
+
+    expr  go to state 118
+    call  go to state 53
+
+
+State 90
+
+   38 returnStmt: RETURN expr ';' .
+
+    $default  reduce using rule 38 (returnStmt)
+
+
+State 91
+
+   42 expr: OBJECTID '=' expr .
+   48     | expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+
+    $default  reduce using rule 42 (expr)
+
+
+State 92
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+   70 actual: expr .
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+
+    $default  reduce using rule 70 (actual)
+
+
+State 93
+
+   71 actuals: actual .
+
+    $default  reduce using rule 71 (actuals)
+
+
+State 94
+
+   72 actuals: actuals . ',' actual
+   74 actualList: actuals .
+
+    ','  shift, and go to state 119
+
+    $default  reduce using rule 74 (actualList)
+
+
+State 95
+
+   69 call: OBJECTID '(' actualList . ')'
+
+    ')'  shift, and go to state 120
+
+
+State 96
+
+   68 expr: '(' expr ')' .
+
+    $default  reduce using rule 68 (expr)
+
+
+State 97
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   60     | expr AND expr .
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+
+    $default  reduce using rule 60 (expr)
+
+
+State 98
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   61     | expr OR expr .
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+
+    $default  reduce using rule 61 (expr)
+
+
+State 99
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   56     | expr EQUAL expr .
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    GE   shift, and go to state 72
+    LE   shift, and go to state 73
+    '<'  shift, and go to state 74
+    '>'  shift, and go to state 75
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    EQUAL  error (nonassociative)
+    NE     error (nonassociative)
+
+    $default  reduce using rule 56 (expr)
+
+
+State 100
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   57     | expr NE expr .
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    GE   shift, and go to state 72
+    LE   shift, and go to state 73
+    '<'  shift, and go to state 74
+    '>'  shift, and go to state 75
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    EQUAL  error (nonassociative)
+    NE     error (nonassociative)
+
+    $default  reduce using rule 57 (expr)
+
+
+State 101
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   58     | expr GE expr .
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    GE   error (nonassociative)
+    LE   error (nonassociative)
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+
+    $default  reduce using rule 58 (expr)
+
+
+State 102
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   55     | expr LE expr .
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    GE   error (nonassociative)
+    LE   error (nonassociative)
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+
+    $default  reduce using rule 55 (expr)
+
+
+State 103
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   54     | expr '<' expr .
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    GE   error (nonassociative)
+    LE   error (nonassociative)
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+
+    $default  reduce using rule 54 (expr)
+
+
+State 104
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   59     | expr '>' expr .
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '+'  shift, and go to state 76
+    '-'  shift, and go to state 77
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    GE   error (nonassociative)
+    LE   error (nonassociative)
+    '<'  error (nonassociative)
+    '>'  error (nonassociative)
+
+    $default  reduce using rule 59 (expr)
+
+
+State 105
+
+   48 expr: expr . '+' expr
+   48     | expr '+' expr .
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 48 (expr)
+
+
+State 106
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   49     | expr '-' expr .
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '*'  shift, and go to state 78
+    '/'  shift, and go to state 79
+    '%'  shift, and go to state 80
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 49 (expr)
+
+
+State 107
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   50     | expr '*' expr .
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 50 (expr)
+
+
+State 108
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   51     | expr '/' expr .
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 51 (expr)
+
+
+State 109
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   52     | expr '%' expr .
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    '&'  shift, and go to state 81
+    '|'  shift, and go to state 82
+    '^'  shift, and go to state 83
+
+    $default  reduce using rule 52 (expr)
+
+
+State 110
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   64     | expr '&' expr .
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    $default  reduce using rule 64 (expr)
+
+
+State 111
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   65     | expr '|' expr .
+   66     | expr . '^' expr
+
+    $default  reduce using rule 65 (expr)
+
+
+State 112
+
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+   66     | expr '^' expr .
+
+    $default  reduce using rule 66 (expr)
+
+
+State 113
+
+   27 ifStmt: IF expr stmtBlock ELSE . stmtBlock
+
+    '{'  shift, and go to state 22
+
+    stmtBlock  go to state 121
+
+
+State 114
+
+   37 forStmt: FOR ';' ';' stmtBlock .
+
+    $default  reduce using rule 37 (forStmt)
+
+
+State 115
+
+   34 forStmt: FOR ';' ';' expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 122
+
+
+State 116
+
+   31 forStmt: FOR ';' expr ';' . expr stmtBlock
+   35        | FOR ';' expr ';' . stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+    '{'           shift, and go to state 22
+
+    stmtBlock  go to state 123
+    expr       go to state 124
+    call       go to state 53
+
+
+State 117
+
+   32 forStmt: FOR expr ';' ';' . expr stmtBlock
+   36        | FOR expr ';' ';' . stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+    '{'           shift, and go to state 22
+
+    stmtBlock  go to state 125
+    expr       go to state 126
+    call       go to state 53
+
+
+State 118
+
+   30 forStmt: FOR expr ';' expr . ';' expr stmtBlock
+   33        | FOR expr ';' expr . ';' stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    ';'    shift, and go to state 127
+
+
+State 119
+
+   72 actuals: actuals ',' . actual
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+
+    expr    go to state 92
+    call    go to state 53
+    actual  go to state 128
+
+
+State 120
+
+   69 call: OBJECTID '(' actualList ')' .
+
+    $default  reduce using rule 69 (call)
+
+
+State 121
+
+   27 ifStmt: IF expr stmtBlock ELSE stmtBlock .
+
+    $default  reduce using rule 27 (ifStmt)
+
+
+State 122
+
+   34 forStmt: FOR ';' ';' expr stmtBlock .
+
+    $default  reduce using rule 34 (forStmt)
+
+
+State 123
+
+   35 forStmt: FOR ';' expr ';' stmtBlock .
+
+    $default  reduce using rule 35 (forStmt)
+
+
+State 124
+
+   31 forStmt: FOR ';' expr ';' expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 129
+
+
+State 125
+
+   36 forStmt: FOR expr ';' ';' stmtBlock .
+
+    $default  reduce using rule 36 (forStmt)
+
+
+State 126
+
+   32 forStmt: FOR expr ';' ';' expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 130
+
+
+State 127
+
+   30 forStmt: FOR expr ';' expr ';' . expr stmtBlock
+   33        | FOR expr ';' expr ';' . stmtBlock
+
+    CONST_BOOL    shift, and go to state 33
+    CONST_INT     shift, and go to state 34
+    CONST_STRING  shift, and go to state 35
+    CONST_FLOAT   shift, and go to state 36
+    OBJECTID      shift, and go to state 37
+    '-'           shift, and go to state 38
+    '!'           shift, and go to state 39
+    '~'           shift, and go to state 40
+    '('           shift, and go to state 42
+    '{'           shift, and go to state 22
+
+    stmtBlock  go to state 131
+    expr       go to state 132
+    call       go to state 53
+
+
+State 128
+
+   72 actuals: actuals ',' actual .
+
+    $default  reduce using rule 72 (actuals)
+
+
+State 129
+
+   31 forStmt: FOR ';' expr ';' expr stmtBlock .
+
+    $default  reduce using rule 31 (forStmt)
+
+
+State 130
+
+   32 forStmt: FOR expr ';' ';' expr stmtBlock .
+
+    $default  reduce using rule 32 (forStmt)
+
+
+State 131
+
+   33 forStmt: FOR expr ';' expr ';' stmtBlock .
+
+    $default  reduce using rule 33 (forStmt)
+
+
+State 132
+
+   30 forStmt: FOR expr ';' expr ';' expr . stmtBlock
+   48 expr: expr . '+' expr
+   49     | expr . '-' expr
+   50     | expr . '*' expr
+   51     | expr . '/' expr
+   52     | expr . '%' expr
+   54     | expr . '<' expr
+   55     | expr . LE expr
+   56     | expr . EQUAL expr
+   57     | expr . NE expr
+   58     | expr . GE expr
+   59     | expr . '>' expr
+   60     | expr . AND expr
+   61     | expr . OR expr
+   64     | expr . '&' expr
+   65     | expr . '|' expr
+   66     | expr . '^' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  go to state 133
+
+
+State 133
+
+   30 forStmt: FOR expr ';' expr ';' expr stmtBlock .
+
+    $default  reduce using rule 30 (forStmt)
