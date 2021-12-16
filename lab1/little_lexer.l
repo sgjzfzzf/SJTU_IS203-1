@@ -1,7 +1,7 @@
 %{
     #include <stdio.h>
     #include "read_words.c"
-    int lineNumber = -1, wordsNumber, charsNumber = 0;
+    int lineNumber = 0, wordsNumber, charsNumber = 0;
 %}
 
 NAME        ^#\ ([0-9a-zA-Z]+\.sealpp)
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     yylex();
     fseek(yyin, 0, SEEK_SET);
     wordsNumber = read_words(yyin, charsNumber);
-    printf("lines:%d,words:%d,chars:%d\n", lineNumber + 1, wordsNumber, charsNumber);
+    printf("lines:%d,words:%d,chars:%d\n", lineNumber, wordsNumber, charsNumber);
     return 0;
 }
 
