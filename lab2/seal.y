@@ -163,6 +163,7 @@
     %type <continueStmt> continueStmt
     %type <breakStmt> breakStmt
     %type <expr> expr
+    %type <expr> exprOrNot
     %type <call> call
     %type <actual> actual
     %type <actuals> actuals
@@ -237,7 +238,7 @@
     : variable  {
       $$ = single_Variables($1);
     }
-    | variableList ',' variable  {
+    | variables ',' variable  {
       $$ = append_Variables($1, single_Variables($3));
     }
     ;
@@ -317,38 +318,14 @@
     ;
 
     forStmt
-    : FOR expr ';' expr ';' expr stmtBlock {
-      $$ = forstmt($2, $4, $6, $7);
-    }
-    | FOR ';' expr ';' expr stmtBlock {
-      $$ = forstmt(no_expr(), $3, $5, $6);
-    }
-    | FOR expr ';' ';' expr stmtBlock {
-      $$ = forstmt($2, no_expr(), $5, $6);
-    }
-    | FOR expr ';' expr ';' stmtBlock {
-      $$ = forstmt($2, $4, no_expr(), $6);
-    }
-    | FOR ';' ';' expr stmtBlock {
-      $$ = forstmt(no_expr(), no_expr(), $4, $5);
-    }
-    | FOR ';' expr ';' stmtBlock {
-      $$ = forstmt(no_expr(), $3, no_expr(), $5);
-    }
-    | FOR expr ';' ';' stmtBlock {
-      $$ = forstmt($2, no_expr(), no_expr(), $5);
-    }
-    | FOR ';' ';' stmtBlock {
-      $$ = forstmt(no_expr(), no_expr(), no_expr(), $4);
+    : FOR exprOrNot ';' exprOrNot ';' exprOrNot stmtBlock {
+      $$ = forstmt($2->copy_Expr(), $4->copy_Expr(), $6->copy_Expr(), $7);
     }
     ;
 
     returnStmt
-    : RETURN expr ';'  {
-      $$ = returnstmt($2);
-    }
-    | RETURN ';'  {
-      $$ = returnstmt(no_expr());
+    : RETURN exprOrNot ';'  {
+      $$ = returnstmt($2->copy_Expr());
     }
     ;
 
@@ -445,6 +422,15 @@
     }
     | '(' expr ')'  {
       $$ = $2;
+    }
+    ;
+
+    exprOrNot
+    : /*empty*/ {
+      $$ = no_expr();
+    }
+    | expr  {
+      $$ = $1;
     }
     ;
 
