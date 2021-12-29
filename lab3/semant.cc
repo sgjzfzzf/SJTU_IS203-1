@@ -197,7 +197,7 @@ void VariableDecl_class::check()
     Symbol type = getType();
     bool isNotExisted = true;
     bool isNotValidType = true;
-    if (objectEnv.lookup(name) != NULL)
+    if (objectEnv.probe(name) != NULL)
     {
         isNotExisted = false;
         semant_error(this) << "This variable has been defined before.\n";
