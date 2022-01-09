@@ -182,7 +182,7 @@ static void check_main()
         CallDecl mainDecl = it->second;
         if (!sameType(mainDecl->getType(), Void))
         {
-            semant_error(mainDecl) << "The return type of main function isn't Void.\n";
+            semant_error(mainDecl) << "Main function should have return type Void.\n";
         }
         if (mainDecl->getVariables()->len() > 0)
         {
@@ -251,7 +251,7 @@ void CallDecl_class::check()
     }
     if (!isReturnExisted)
     {
-        semant_error(this) << "This function doesn't have return.\n";
+        semant_error(this) << "Function main must have an overall return statement.\n";
     }
     objectEnv.exitscope();
 }
@@ -316,7 +316,7 @@ void ReturnStmt_class::check(Symbol type)
 {
     if ((value->is_empty_Expr() && !sameType(type, Void)) || !sameType(value->checkType(), type))
     {
-        semant_error(this) << "This return statement provide a value with wrong type.\n";
+        semant_error(this) << "Returns " << value->getType() << " , but need " << type << "\n";
     }
 }
 
@@ -332,7 +332,7 @@ void BreakStmt_class::check(Symbol type)
 {
     if (!isInLoop)
     {
-        semant_error(this) << "This break statement isn't in a loop.\n";
+        semant_error(this) << "break must be used in a loop sentence.\n";
     }
 }
 
@@ -366,13 +366,16 @@ Symbol Call_class::checkType()
         Variables variables = callDecl->getVariables();
         int i = 0;
         int j = 0;
+        int para_index = 1;
         for (; variables->more(i) && actuals->more(j); i = variables->next(i), j = actuals->next(j))
         {
             Actual actual = actuals->nth(i);
             if (!sameType(variables->nth(i)->getType(), actual->checkType()))
             {
-                semant_error(this) << "The type of parameters don't match the declaration.\n";
+                semant_error(this) << "Function loop, the " << para_index << " parameter should be " << variables->nth(i)->getType() << " but provided a " << actual->getType() << ".\n";
+                return callDecl->getType();
             }
+            ++para_index;
         }
         if (variables->more(i) || actuals->more(j))
         {
@@ -764,7 +767,7 @@ Symbol Object_class::checkType()
     else
     {
         setType(Void);
-        semant_error(this) << "This variable hasn't been defined before.\n";
+        semant_error(this) << "object " << var <<  " has not been defined.\n";
     }
     return type;
 }
